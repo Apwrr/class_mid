@@ -38,7 +38,7 @@ void main() {
         count++;
       }
 
-      result = game.doGuess(guess, count);
+      //result = game.doGuess(guess, count);
       if (result == 0) {
         again = 1;
       }

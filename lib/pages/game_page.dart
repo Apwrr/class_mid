@@ -11,6 +11,8 @@ class _GamePageState extends State<GamePage> {
   final MyGame = Game();
   var feedback = '';
   var showButton = false;
+  var textOutput = '';
+  var outputButton = false;
 
   void handleClick() {
     setState(() {
@@ -47,6 +49,30 @@ class _GamePageState extends State<GamePage> {
       }
     }
   }
+  void calulateOnClick(){
+    var input = int.tryParse((Mycontroller.text));
+    print(input);
+    if(input == null){
+      //error
+      setState(() {
+        textOutput = 'Input error, please try again';
+      });
+      print('Input error');
+    } else{
+      if(input % 2 == 0){
+        setState(() {
+        textOutput = '$input is even';
+        outputButton = true;
+        });
+      } else{
+        setState(() {
+          textOutput = '$input is odd';
+          outputButton = false;
+        });
+      }
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,16 +93,22 @@ class _GamePageState extends State<GamePage> {
             ),
           ),
           //Callback
-          ElevatedButton(onPressed: handleClick, child: Text('GUESS'),
+          ElevatedButton(
+            onPressed: handleClick,
+            child: Text('GUESS'),
           ),
           Text(feedback),
 
-          showButton
-          ? OutlinedButton(
-              onPressed: (){},
-              child: Text(''),
-          )
-           :SizedBox.shrink()
+          ElevatedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: showButton ? Colors.green : Colors.red,
+            ),
+            onPressed: calulateOnClick,
+            child: const Text('TEST'),
+          ),
+          //Icon(showButton ? Icons.print : Icons.access_time_rounded),
+           Text(textOutput),
+           Icon(outputButton ? Icons.add : Icons.accessibility ,color: Colors.green),
         ],
       ),
     );
